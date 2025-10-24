@@ -1,47 +1,47 @@
-// Importa mongoose para manejar la conexión con MongoDB
+// Import mongoose to manage MongoDB connections
 import mongoose from "mongoose";
 
-// Define una interfaz que describe la estructura del caché
+// Define an interface that describes the structure of the cache
 interface MongooseCache {
-  conn: typeof mongoose | null;    // Almacena la conexión
-  promise: Promise<typeof mongoose> | null;  // Almacena la promesa de conexión
+  conn: typeof mongoose | null;    // Stores the connection
+  promise: Promise<typeof mongoose> | null;  // Stores the connection promise
 }
 
-// Extiende el objeto global para incluir la variable mongoose
+// Extends the global object to include the mongoose variable
 declare global {
   var mongoose: MongooseCache | undefined;
 }
 
-// Verifica que existe la variable de entorno MONGODB_URI
+// Check if the MONGODB_URI environment variable exists
 if (!process.env.MONGODB_URI) {
-  throw new Error("❌ Debes definir MONGODB_URI en tu archivo .env.local");
+  throw new Error("❌ You must define MONGODB_URI in your .env.local file");
 }
 
-// Obtiene el caché existente del objeto global
+// Get the existing cache from the global object
 let cached = global.mongoose;
 
-// Si no existe el caché, inicializa uno nuevo
+// If the cache doesn't exist, initialize a new one
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-// Función asíncrona para conectar a la base de datos
+// Async function to connect to the database
 async function dbConnect() {
-  // Si ya existe una conexión, la retorna
+  // If a connection already exists, return it
   if (cached!.conn) {
     return cached!.conn;
   }
 
-  // Si no hay una promesa de conexión pendiente, crea una nueva
+  // If there is no pending connection promise, create a new one
   if (!cached!.promise) {
     cached!.promise = mongoose.connect(process.env.MONGODB_URI as string);
   }
 
-  // Espera a que se resuelva la promesa y guarda la conexión
+  // Wait for the promise to resolve and store the connection
   cached!.conn = await cached!.promise;
-  // Retorna la conexión
+  // Return the connection
   return cached!.conn;
 }
 
-// Exporta la función para ser usada en otros archivos
+// Export the function to be used in other files
 export default dbConnect;

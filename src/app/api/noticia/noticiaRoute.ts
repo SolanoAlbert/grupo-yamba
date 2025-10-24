@@ -1,7 +1,7 @@
 import cloudinary from "@/lib/cloudinary";  // Importa la librería de Cloudinary
 import { NextResponse } from "next/server"; // Importa utilidades para responder en rutas Next.js
 import dbConnect from "@/lib/mongodb";      // Importa la función para conectar a MongoDB
-import Noticia from "@/models/noticia";     // Importa el modelo de noticias
+import Noticia from "@/models/News";     // Importa el modelo de noticias
 
 
 

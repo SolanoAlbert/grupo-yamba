@@ -1,4 +1,4 @@
-// Tipos globales para el proyecto
+// Global types for the application
 export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
@@ -6,75 +6,75 @@ export interface ApiResponse<T = unknown> {
   error?: string;
 }
 
-// Tipos para autenticación
+// Authenticated user type
 export interface AuthUser {
   id: string;
   email: string;
-  nombre: string;
-  imagen?: string;
-  rol: 'admin' | 'usuario';
-  proveedor: 'google' | 'facebook' ;
+  name: string;
+  image?: string;
+  role: 'admin' | 'user';
+  provider: 'google' | 'facebook';
 }
 
-// Tipos para formularios
+// Form types
 export interface LoginForm {
   email: string;
   password: string;
 }
 
-export interface NoticiaForm {
-  titulo: string;
-  contenido: string;
-  imagen?: string;
-  resumen?: string;
+export interface NewsForm {
+  title: string;
+  content: string;
+  image?: string;
+  summary?: string;
   tags?: string[];
-  comentariosHabilitados: boolean;
+  commentsEnabled: boolean;
 }
 
-export interface ComentarioForm {
-  contenido: string;
-  noticiaId: string;
+export interface CommentForm {
+  content: string;
+  newsId: string;
 }
 
 export interface BannerForm {
-  titulo: string;
-  imagen: File | string;
-  enlace?: string;
-  tipo: 'horizontal' | 'vertical';
-  posicion: 'header' | 'sidebar' | 'footer' | 'contenido';
-  fechaInicio?: Date;
-  fechaFin?: Date;
-  orden: number;
+  title: string;
+  image: File | string;
+  link?: string;
+  bannerType: 'horizontal' | 'vertical';
+  position: 'header' | 'sidebar' | 'footer' | 'contenido';
+  startDate?: Date;
+  endDate?: Date;
+  order: number;
 }
 
-export interface TransmisionForm {
-  titulo: string;
-  descripcion?: string;
-  tipo: 'radio' | 'video';
-  fechaProgramada?: Date;
+export interface TransmissionForm {
+  title: string;
+  description?: string;
+  transmissionType: 'radio' | 'video';
+  scheduledDate?: Date;
   thumbnailUrl?: string;
 }
 
-// Enums para mejor tipo de datos
+// Enums for various types and roles
 export enum UserRole {
   ADMIN = 'admin',
-  USUARIO = 'usuario'
+  USER = 'user'
 }
 
-export enum TransmisionEstado {
-  PROGRAMADA = 'programada',
-  EN_VIVO = 'en_vivo',
-  FINALIZADA = 'finalizada'
+export enum TransmissionStatus {
+  SCHEDULED = 'scheduled',
+  LIVE = 'live',
+  FINISHED = 'finished'
 }
 
-export enum BannerTipo {
+export enum BannerType {
   HORIZONTAL = 'horizontal',
   VERTICAL = 'vertical'
 }
 
-export enum BannerPosicion {
+export enum BannerPosition {
   HEADER = 'header',
   SIDEBAR = 'sidebar',
   FOOTER = 'footer',
-  CONTENIDO = 'contenido'
+  CONTENT = 'content'
 }

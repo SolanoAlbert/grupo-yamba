@@ -1,55 +1,55 @@
-// importa mongoose y los tipos necesarios
-import mongoose, { Schema, model, models } from "mongoose";
+// imports mongoose and necessary types
+import  { Schema, model, models } from "mongoose";
 
-// Define la interfaz para el tipo de banner
+// Define the interface for the banner type
 export interface IBanner {
   _id?: string;
-  titulo: string;
-  imagen: string; // URL de Cloudinary
-  enlace?: string; // URL opcional para redirección
-  tipo: 'horizontal' | 'vertical';
-  posicion: 'header' | 'sidebar' | 'footer' | 'contenido';
-  activo: boolean;
-  fechaInicio?: Date;
-  fechaFin?: Date;
-  orden: number; // Para ordenar múltiples banners
-  clicks: number; // Contador de clicks para estadísticas
+  title?: string;
+  image: string; // Cloudinary URL
+  link?: string; // Optional link
+  type: 'horizontal' | 'vertical';
+  position: 'header' | 'sidebar' | 'footer' | 'content';
+  active: boolean;
+  startDate?: Date;
+  endDate?: Date;
+  order: number; // Order of display
+  clicks: number; // Click count for statistics
 }
 
-// Define el esquema para los banners
+// Define the schema for banners
 const BannerSchema = new Schema<IBanner>({
-  titulo: { 
+  title: { 
     type: String, 
     required: true, 
     trim: true,
     maxlength: 100 
   },
-  imagen: { 
+  image: { 
     type: String, 
     required: true 
   },
-  enlace: { 
+  link: { 
     type: String, 
     trim: true 
   },
-  tipo: { 
+  type: { 
     type: String, 
     enum: ['horizontal', 'vertical'], 
     required: true 
   },
-  posicion: { 
+  position: { 
     type: String, 
-    enum: ['header', 'sidebar', 'footer', 'contenido'], 
+    enum: ['header', 'sidebar', 'footer', 'content'], 
     required: true,
     default: 'sidebar'
   },
-  activo: { 
+  active: { 
     type: Boolean, 
     default: true 
   },
-  fechaInicio: { type: Date },
-  fechaFin: { type: Date },
-  orden: { 
+  startDate: { type: Date },
+  endDate: { type: Date },
+  order: { 
     type: Number, 
     default: 0 
   },
@@ -61,12 +61,12 @@ const BannerSchema = new Schema<IBanner>({
   timestamps: true
 });
 
-// Índices para optimización
-BannerSchema.index({ activo: 1, posicion: 1, orden: 1 });
-BannerSchema.index({ fechaInicio: 1, fechaFin: 1 });
+// Optimization indexes
+BannerSchema.index({ active: 1, position: 1, order: 1 });
+BannerSchema.index({ startDate: 1, endDate: 1 });
 
-// Evitamos recompilar el modelo si ya existe
+// Avoid recompiling the model if it already exists
 const Banner = models.Banner || model<IBanner>("Banner", BannerSchema);
 
-// Exporta el modelo para ser usado en otras partes de la aplicación
+// Export the model to be used in other parts of the application
 export default Banner;
