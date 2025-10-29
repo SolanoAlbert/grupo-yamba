@@ -1,4 +1,4 @@
-import {ValidationError} from '../errors/DomainError';
+import {ValidationError} from '../errors/domain-error';
 
 /**
  * Slug validation
