@@ -10,8 +10,19 @@ export class DomainError extends Error {
     ){
         super(message);
         this.name = this.constructor.name;
-        // Keep proper stack trace for where our error was thrown
-        Error.captureStackTrace(this, this.constructor);
+        // Keep proper stack trace when available
+        const AnyError = Error as unknown as {
+            captureStackTrace?: (
+                target: unknown,
+                ctor?: ((...args: unknown[]) => unknown) | (new (...args: unknown[]) => unknown)
+            ) => void;
+        };
+        if (typeof AnyError.captureStackTrace === 'function') {
+            AnyError.captureStackTrace(
+                this,
+                this.constructor as unknown as ((...args: unknown[]) => unknown) | (new (...args: unknown[]) => unknown)
+            );
+        }
     }
 }
 

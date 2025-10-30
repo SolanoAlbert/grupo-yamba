@@ -11,6 +11,16 @@ export abstract class BaseEntity {
         if (!id || id.trim() === '') {
             throw new Error('ID cannot be empty');
         }
+
+    if (!(createdAt instanceof Date) || Number.isNaN(createdAt.getTime())) {
+      throw new Error('createdAt must be a valid Date');
+    }
+    if (!(updatedAt instanceof Date) || Number.isNaN(updatedAt.getTime())) {
+      throw new Error('updatedAt must be a valid Date');
+    }
+    if (updatedAt.getTime() < createdAt.getTime()) {
+      throw new Error('updatedAt cannot be earlier than createdAt');
+    }
     }
 
      /**

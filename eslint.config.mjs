@@ -10,7 +10,25 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript","plugin:testing-library/react","plugin:jest-dom/recommended"),
+  // Ignore build artifacts and external folders
+  {
+    ignores: [
+      "**/.next/**",
+      "**/node_modules/**",
+      "**/.turbo/**",
+      "**/coverage/**",
+      "**/out/**",
+      "**/build/**",
+      "**/.vercel/**",
+    ],
+  },
+  // Apply Next.js + TypeScript + Testing Library + Jest DOM rules
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ),
 ];
 
 export default eslintConfig;

@@ -37,7 +37,7 @@ export class Slug {
         const trimmed = slug.trim();
 
         if(!trimmed){
-            throw new ValidationError('Slug cannot be empty');
+            throw new ValidationError('Slug cannot be empty', 'slug');
         }
 
         // Only lowercase letters, numbers and hyphens (no leading/trailing or consecutive)
@@ -72,7 +72,16 @@ export class Slug {
 
     /** Converts slug to JSON */
     toJSON(): string {
-        return JSON.stringify({ slug: this._value });
+        return this._value;
+    }
+
+    static isValid(value: string): boolean {
+        try {
+            new Slug(value);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
 

@@ -1,7 +1,8 @@
-import { MongoClient, Document as MongoDocument, Db } from 'mongodb';
+import "server-only";
+import { MongoClient, Document as MongoDocument, Db } from "mongodb";
 
 if (!process.env.MONGODB_URI) {
-  throw new Error('❌ Please add your MongoDB URI to .env');
+  throw new Error("❌ Please add your MongoDB URI to .env");
 }
 
 const uri = process.env.MONGODB_URI;
@@ -10,7 +11,7 @@ const options = {};
 // Extraer nombre de la base de datos del URI
 const getDatabaseName = (): string => {
   const match = uri.match(/\.net\/([^?]+)/);
-  return match ? match[1] : 'GrupoYamba';
+  return match ? match[1] : "GrupoYamba";
 };
 
 const dbName = getDatabaseName();
@@ -21,12 +22,11 @@ let dbPromise: Promise<Db>;
 
 // Declarar variable global para cacheo en desarrollo
 declare global {
-  
   var _mongoClientPromise: Promise<MongoClient> | undefined;
   var _mongoDbPromise: Promise<Db> | undefined;
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   // Desarrollo: usar variables globales y garantizar que ambas promesas existan
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'development') {
 // ✅ Exportar clientPromise para uso general
 export default clientPromise;
 
-// ✅ NUEVO: Exportar dbPromise para Better Auth
+// ✅ Exportar dbPromise para Better Auth
 export { dbPromise };
 
 /**
@@ -66,7 +66,10 @@ export async function getDatabase(customDbName?: string): Promise<Db> {
 /**
  * Helper to get a specific collection
  */
-export async function getCollection<T extends MongoDocument = MongoDocument>(collectionName: string, customDbName?: string) {
+export async function getCollection<T extends MongoDocument = MongoDocument>(
+  collectionName: string,
+  customDbName?: string
+) {
   const db = await getDatabase(customDbName);
   return db.collection<T>(collectionName);
 }

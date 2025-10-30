@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Server-first architecture
+
+See `docs/architecture.md` for the full server-first structure aligned with the official Next.js documentation (App Router, Server Components by default, server-only modules in `lib/`, and Route Handlers for APIs).
+
 ## Getting Started
 
 First, run the development server:
